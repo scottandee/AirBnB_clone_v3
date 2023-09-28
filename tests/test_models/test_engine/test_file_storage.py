@@ -113,3 +113,37 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestGet(unittest.TestCase):
+    """This tests the get method"""
+    def test_id_in_objects(self):
+        storage = FileStorage()
+        s = State()
+        storage.new(s)
+        key = s.__class__.__name__ + '.' + s.id
+        without_get = storage.all()[key]
+        with_get = storage.get(State, s.id)
+        self.assertEqual(without_get, with_get)
+
+    def test_id_not_in_objects(self):
+        storage = FileStorage()
+        s = State()
+        a = Amenity()
+        storage.new(s)
+        storage.new(a)
+        key = a.__class__.__name__ + '.' + s.id
+        without_get = storage.all().get(key)
+        with_get = storage.get(Amenity, s.id)
+        self.assertEqual(without_get, with_get)
+
+
+class TestCount(unittest.TestCase):
+    """This tests the count method"""
+
+    def test_count_is_same_as_len_dict(self):
+        storage = FileStorage()
+        s = State()
+        storage.new(s)
+        len_of_dict = len(storage.all())
+        self.assertEqual(len_of_dict, storage.count())
