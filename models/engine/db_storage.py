@@ -78,7 +78,9 @@ class DBStorage:
     def get(self, cls, id):
         """Return the object if a matching object is found in database"""
         result = self.__session.query(cls).filter(cls.id == id)
-        return result[0]
+        for res in result:
+            return res
+        return None
 
     def count(self, cls=None):
         """Return the number of elements in database"""
