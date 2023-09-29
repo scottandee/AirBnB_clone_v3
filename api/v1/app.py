@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This contains """
+"""This contains our flask app"""
 
 from flask import Flask, jsonify, make_response
 from models import storage
@@ -19,5 +19,5 @@ def teardown(self):
 
 if __name__ == '__main__':
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    port = os.getenv("HBNB_API_PORT")
-    app.run(host=host, threaded=True, debug=True)
+    port = os.getenv("HBNB_API_PORT", 5000)
+    app.run(host=host, port=port, threaded=True, debug=True)
