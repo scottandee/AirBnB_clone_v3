@@ -34,7 +34,7 @@ def delete_state(state_id):
     """Delete the state with specified state_id
     if present
     """
-    state = storage.get(State, state_id)
+    state = storage.get(State, escape(state_id))
     if state is None:
         abort(404)
     else:

@@ -35,7 +35,7 @@ def delete_amenity(amenity_id):
     """Delete the amenity with specified amenity_id
     if present
     """
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, escape(amenity_id))
     if amenity is None:
         abort(404)
     else:
