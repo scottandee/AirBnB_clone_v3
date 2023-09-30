@@ -6,6 +6,7 @@ from markupsafe import escape
 from flask import jsonify, abort, make_response, request
 from models.state import State
 from models import storage
+from datetime import datetime
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
@@ -78,7 +79,6 @@ def update_state(state_id):
         old_state_dic[key] = updates[key]
 
     new_state = State(**old_state_dic)
-    storage.new(new_state)
-    storage.delete(state)
-    storage.save()
+    state.delete()
+    new_state.save()
     return make_response(new_state.to_dict(), 200)
