@@ -79,6 +79,8 @@ def update_state(state_id):
         old_state_dic[key] = updates[key]
 
     new_state = State(**old_state_dic)
-    state.delete()
-    new_state.save()
+    storage.delete(state)
+    new_state.updated_at = datetime.utcnow()
+    storage.new(new_state)
+    storage.save()
     return make_response(new_state.to_dict(), 200)
