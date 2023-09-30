@@ -49,9 +49,9 @@ def create_state():
     in the body of the POST request
     """
     if not request.is_json:
-        return make_response(jsonify({"message": "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     elif "name" not in request.json:
-        return make_response(jsonify({"message": "Missing name"}), 400)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     else:
         s = State(name=request.json["name"])
         storage.new(s)
@@ -65,7 +65,7 @@ def update_state(state_id):
     provided data
     """
     if not request.is_json:
-        return make_response(jsonify({"message": "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
     updates = request.json
     state = storage.get(State, escape(state_id))
