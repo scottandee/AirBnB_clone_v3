@@ -12,8 +12,8 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown(self):
-    """This removes the current session"""
+def teardown(exception=None):
+    """This removes the SQLAlchemy current session"""
     storage.close()
 
 
