@@ -17,12 +17,13 @@ def teardown(self):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """Handle all not found errors"""
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
 if __name__ == '__main__':
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
     port = os.getenv("HBNB_API_PORT", 5000)
     app.run(host=host, port=port, threaded=True, debug=True)
-
-@app.errorhandler(404)
-def not_found(error):
-    """Handles 404 error"""
-    return jsonify({'error': 'Not found'}), 404

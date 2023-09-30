@@ -21,20 +21,11 @@ def status():
     """Returns the status as JSON"""
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    """returns the number of each objects by type"""
-
-    amenities = storage.count('Amenity')
-    cities = storage.count('City')
-    places = storage.count('Place')
-    reviews = storage.count('Review')
-    states = storage.count('State')
-    users = storage.count('User')
-    
-    return jsonify(amenities=amenities,
-                   cities=cities,
-                   places=places,
-                   reviews=reviews,
-                   states=states,
-                   users=users)
+    """Return objects and their number in JSON"""
+    stats = {}
+    for key, cls in classes.items():
+        stats[key] = storage.count(cls)
+    return jsonify(stats)
