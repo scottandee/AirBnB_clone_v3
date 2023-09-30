@@ -25,7 +25,7 @@ def get_one_state(state_id):
     if state is None:
         abort(404)
     else:
-        return state.to_dict()
+        return jsonify(state.to_dict())
 
 
 @app_views.route("/states/<state_id>", methods=["DELETE"],
@@ -56,7 +56,7 @@ def create_state():
         s = State(name=request.json["name"])
         storage.new(s)
         storage.save()
-        return make_response(s.to_dict(), 201)
+        return make_response(jsonify(s.to_dict()), 201)
 
 
 @app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
@@ -83,4 +83,4 @@ def update_state(state_id):
     new_state.updated_at = datetime.utcnow()
     storage.new(new_state)
     storage.save()
-    return make_response(new_state.to_dict(), 200)
+    return make_response(jsonify(new_state.to_dict()), 200)
