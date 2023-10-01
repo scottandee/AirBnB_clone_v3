@@ -69,8 +69,10 @@ def update_state(state_id):
 
     updates = request.json
     state = storage.get(State, escape(state_id))
-    old_state_dic = state.to_dict()
+    if state is None:
+        abort(404)
 
+    old_state_dic = state.to_dict()
     for key in old_state_dic.keys():
         if key in ["created_at", "updated_at", "id"]:
             continue
