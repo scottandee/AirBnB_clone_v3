@@ -71,6 +71,9 @@ def update_amenity(amenity_id):
 
     updates = request.json
     amenity = storage.get(Amenity, escape(amenity_id))
+    if amenity is None:
+        abort(404)
+
     old_amenity_dic = amenity.to_dict()
 
     for key in old_amenity_dic.keys():
